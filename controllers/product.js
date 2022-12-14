@@ -87,7 +87,7 @@ const product = {
   getTopRatedProducts: async (req, res) => {
     try {
       const products = await Product.find().sort({ rating: -1 }).limit(4);
-      if (products.size() > 0) {
+      if (products.length > 0) {
         return res.status(200).json({ products });
       }
       return res.status(404).json({ message: "Products not found" });
@@ -120,7 +120,7 @@ const product = {
           "/" +
           product.title
       );
-      if (recommendedProducts.size() > 0) {
+      if (recommendedProducts.length > 0) {
         return res.status(200).json({ recommendedProducts });
       }
       return res.status(404).json({ message: "Products not found" });
