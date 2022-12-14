@@ -100,7 +100,7 @@ const product = {
   getFeaturedProducts: async (req, res) => {
     try {
       const products = await Product.find().sort({ word_count: -1 }).limit(4);
-      if (products.size() > 0) {
+      if (products.length > 0) {
         return res.status(200).json({ products });
       }
       return res.status(404).json({ message: "Products not found" });

@@ -10,7 +10,13 @@ router.get("/seed", productCont.seedProducts);
 // Public endpoints
 router.get("/", authMid.isAuthenticated, productCont.getAllProducts);
 
-router.get("/:id", authMid.isAuthenticated, productCont.getProductById);
+router.post(
+  "/",
+  authMid.isAuthenticated,
+  userMid.isAdmin,
+  productMid.validateProduct,
+  productCont.createProduct
+);
 
 router.get(
   "/category/:genre",
@@ -31,7 +37,7 @@ router.get(
 );
 
 router.get(
-  "/feaured",
+  "/featured",
   authMid.isAuthenticated,
   productCont.getFeaturedProducts
 );
@@ -42,13 +48,7 @@ router.get(
   productCont.getRecommendedProducts
 );
 
-router.post(
-  "/",
-  authMid.isAuthenticated,
-  userMid.isAdmin,
-  productMid.validateProduct,
-  productCont.createProduct
-);
+router.get("/:id", authMid.isAuthenticated, productCont.getProductById);
 
 router.put(
   "/:id",
