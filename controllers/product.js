@@ -54,8 +54,8 @@ const product = {
   getProductsByGenre: async (req, res) => {
     try {
       const { genre } = req.params;
-      const products = await Product.find({ genre });
-      if (products.size() > 0) {
+      const products = await Product.find({ genre }).limit(10);
+      if (products.length > 0) {
         return res.status(200).json({ products });
       }
       return res.status(404).json({ message: "Products not found" });
@@ -74,7 +74,7 @@ const product = {
           path: ["title", "author", "genre"],
         },
       });
-      if (products.size() > 0) {
+      if (products.length > 0) {
         return res.status(200).json({ products });
       }
       return res.status(404).json({ message: "Products not found" });
