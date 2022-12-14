@@ -36,6 +36,15 @@ const userSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    credit: {
+      type: Number,
+      default: 0,
+    },
+
+    payments: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );

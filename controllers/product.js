@@ -2,6 +2,7 @@ const User = require("../models/user");
 const Product = require("../models/product");
 const { getRandomProduct } = require("../utils/product");
 const axios = require("axios");
+const Insta = require("../utils/payment");
 
 const product = {
   getAllProducts: async (req, res) => {
@@ -38,8 +39,6 @@ const product = {
       const user = await User.findById(userId);
       const product = await Product.findById(productId);
       if (product) {
-        console.log(productId);
-        console.log(user.interest);
         user.interest.push(productId);
         await user.save();
         return res.status(200).json({ product });
@@ -112,16 +111,18 @@ const product = {
 
   getRecommendedProducts: async (req, res) => {
     try {
-      const productId = req.params.id;
-      const product = await Product.findById(productId);
+      const bookId = req.params.id;
+      const product = await Product.findOne({ bookId });
       const recommendedProducts = await axios.get(
         "http://localhost:8000/api/recommend-book-desc/" +
           product.genre +
           "/" +
           product.title
       );
-      if (recommendedProducts.length > 0) {
-        return res.status(200).json({ recommendedProducts });
+      if (recommendedProducts.data.length > 0) {
+        return res
+          .status(200)
+          .json({ recommendedProducts: recommendedProducts.data });
       }
       return res.status(404).json({ message: "Products not found" });
     } catch (error) {

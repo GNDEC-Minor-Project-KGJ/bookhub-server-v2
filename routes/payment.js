@@ -11,10 +11,6 @@ router.post(
 );
 
 // To verify the payment status and update the payment status in the database. Only if the payment microservice has failed to verify during the intiation of the payment.
-router.post(
-  "/verify-payment",
-  authMid.isAuthenticated,
-  paymentCont.verifyPayment
-);
+router.get("/verify-payment", paymentCont.verifyPayment);
 
 module.exports = router;
