@@ -265,7 +265,7 @@ const product = {
 
       if (product && product.price <= user.credit) {
         user.credit -= product.price;
-        user.purchases.push(product._id);
+        user.purchases.push(product.bookId);
         await user.save();
         return res.status(200).json({ user });
       }
