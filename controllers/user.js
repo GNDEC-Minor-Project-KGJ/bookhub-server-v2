@@ -7,7 +7,7 @@ const user = {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
-      console.log(user.authenticate(password));
+      // console.log(user);
       if (user && user.authenticate(password)) {
         const token = await generateAuthToken(user._id);
         return res.status(200).json({ token });

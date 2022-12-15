@@ -250,7 +250,7 @@ const product = {
   purchaseProduct: async (req, res) => {
     try {
       const bookId = req.params.id;
-      console.log("bookId: ", bookId);
+      // console.log("bookId: ", bookId);
       const user = await User.findById(req.userId);
       const product = await Product.findOne({ bookId });
 
