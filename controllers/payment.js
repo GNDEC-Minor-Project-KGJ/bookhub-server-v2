@@ -7,7 +7,6 @@ const payment = {
     try {
       const userId = req.userId;
       const amount = req.body.amount;
-      const bookId = req.body.bookId;
       const user = await User.findById(userId);
       if (user) {
         const data = await Insta.PaymentData();
@@ -31,7 +30,6 @@ const payment = {
             paymentRequestStatus: paymentRequestData.payment_request.status,
             paymentLink: paymentRequestData.payment_request.longurl,
             userId,
-            bookId,
           });
 
           await payment.save();
@@ -83,12 +81,13 @@ const payment = {
                   .status(200)
                   .json({ message: "Payment already verified" });
 
-              user.purchases.push(paymentDetails.bookId);
               user.credit += paymentDetails.amount;
               user.payments.push(paymentDetails._id);
               await user.save();
+              return res.status(200).json({ message: "Payment verified" });
             }
-            return res.status(200).json({ message: "Payment verified" });
+
+            return res.status(200).json({ message: "User not found" });
           }
 
           return res.status(200).json({ message: "Payment not found" });

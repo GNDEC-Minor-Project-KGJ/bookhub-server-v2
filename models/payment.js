@@ -7,11 +7,6 @@ const paymentSchema = new mongoose.Schema(
       required: true,
     },
 
-    bookId: {
-      type: String,
-      required: true,
-    },
-
     name: {
       type: String,
     },

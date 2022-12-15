@@ -54,6 +54,13 @@ router.get(
   productCont.getRecommendedProducts
 );
 
+// Purchase a product from the database based on it's ID
+router.post(
+  "/purchase/:id",
+  authMid.isAuthenticated,
+  productCont.purchaseProduct
+);
+
 // Get a product from the database based on it's ID
 router.get("/:id", authMid.isAuthenticated, productCont.getProductById);
 
@@ -72,6 +79,5 @@ router.delete(
   userMid.isAdmin,
   productCont.deleteProduct
 );
-
 
 module.exports = router;

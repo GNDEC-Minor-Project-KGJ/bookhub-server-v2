@@ -246,6 +246,34 @@ const product = {
       return res.status(500).json({ message: error.message });
     }
   },
+
+  purchaseProduct: async (req, res) => {
+    try {
+      const bookId = req.params.id;
+      console.log("bookId: ", bookId);
+      const user = await User.findById(req.userId);
+      const product = await Product.findOne({ bookId });
+
+      console.log("user: ", user);
+
+      if (user.purchases.includes(product._id))
+        return res
+          .status(400)
+          .json({ message: "User already purchased this book" });
+
+      if (product && product.price <= user.credit) {
+        user.credit -= product.price;
+        user.purchases.push(product._id);
+        await user.save();
+        return res.status(200).json({ user });
+      }
+
+      return res.status(404).json({ message: "Product not found" });
+    } catch (error) {
+      console.log("Controller: product: purchaseProduct: error: ", error);
+      return res.status(500).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = product;
