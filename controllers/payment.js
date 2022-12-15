@@ -20,6 +20,9 @@ const payment = {
         data.phone = user.phone;
 
         Insta.createPayment(data, async function (error, response) {
+          if (error)
+            return res.status(500).json({ message: "Something went wrong" });
+
           const paymentRequestData = JSON.parse(response);
 
           const payment = new Payment({
