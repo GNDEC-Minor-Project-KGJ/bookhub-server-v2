@@ -18,6 +18,7 @@ const auth = {
         return res.status(401).json({ message: "Unauthorized" });
       }
     } catch (error) {
+      console.log("Middleware: auth: isAuthenticated: error: ", error);
       return res.status(500).json({ message: error.message });
     }
   },
