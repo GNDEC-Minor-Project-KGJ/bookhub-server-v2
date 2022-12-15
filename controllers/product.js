@@ -9,15 +9,15 @@ const product = {
     try {
       const userId = req.userId;
       const user = await User.findById(userId);
-      let randomProduct = getRandomProduct(user.interest);
-      if (randomProduct === undefined) {
-        const randomBookId = Math.floor(Math.random() * 2000);
-        randomProduct = await Product.findOne({
-          bookId: randomBookId.toString(),
-        });
-      }
+      const randomBookId = getRandomProduct(user.interest);
+      console.log(randomBookId);
+      const randomProduct = await Product.findOne({
+        bookId: randomBookId.toString(),
+      });
 
-      const pdata = await Product.findById(randomProduct);
+      // console.log("randomProduct: ", randomProduct);
+
+      const pdata = await Product.findOne({ bookId: randomProduct.bookId });
       const data = await axios.get(
         "http://localhost:8000/api/recommend-book-desc/" +
           pdata.genre +
