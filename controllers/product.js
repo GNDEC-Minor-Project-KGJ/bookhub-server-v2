@@ -35,11 +35,11 @@ const product = {
   getProductById: async (req, res) => {
     try {
       const userId = req.userId;
-      const productId = req.params.id;
+      const bookId = req.params.id;
       const user = await User.findById(userId);
-      const product = await Product.findById(productId);
+      const product = await Product.findOne({ bookId: bookId });
       if (product) {
-        user.interest.push(productId);
+        user.interest.push(bookId);
         await user.save();
         return res.status(200).json({ product });
       }
