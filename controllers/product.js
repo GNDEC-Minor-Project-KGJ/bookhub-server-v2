@@ -250,7 +250,7 @@ const product = {
   purchaseProduct: async (req, res) => {
     try {
       const bookId = req.params.id;
-      // console.log("bookId: ", bookId);
+      console.log("bookId: ", bookId);
       const user = await User.findById(req.userId);
       const product = await Product.findOne({ bookId });
 
@@ -261,12 +261,17 @@ const product = {
           .status(400)
           .json({ message: "User already purchased this book" });
 
+      console.log("PRICE - ", product.price);
+
       if (product && product.price <= user.credit) {
         user.credit -= product.price;
         user.purchases.push(product._id);
         await user.save();
         return res.status(200).json({ user });
       }
+
+      if (product && product.price > user.credit)
+        return res.status(400).json({ message: "Insufficient credit" });
 
       return res.status(404).json({ message: "Product not found" });
     } catch (error) {
