@@ -4,11 +4,8 @@ const { verifyAuthToken } = require("../utils/auth");
 const auth = {
   isAuthenticated: async (req, res, next) => {
     try {
-      console.log(req.headers);
       const token = req.headers.authorization.split(" ")[1];
       const decodedToken = await verifyAuthToken(token);
-      console.log(token);
-      console.log(decodedToken);
 
       if (decodedToken) {
         req.userId = decodedToken.id;
