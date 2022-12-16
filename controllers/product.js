@@ -141,12 +141,9 @@ const product = {
         {
           title: req.body.title,
           desc: req.body.description,
-          cleaned_desc: req.body.description,
           rating: req.body.rating,
           author: req.body.author,
           genre: req.body.genre,
-          url: req.body.image,
-          word_count: req.body.description.split(" ").length,
         }
       );
 
@@ -162,7 +159,7 @@ const product = {
         desc: description,
         rating,
         word_count,
-      } = product.data;
+      } = newProduct.data;
       const data = new Product({
         title,
         bookId,
